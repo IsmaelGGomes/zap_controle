@@ -13,11 +13,13 @@ class WebController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
+        $requestType = $request->method();
 
         $dataToString = json_encode($data);
-        Whats::create(['webhook' => $dataToString, 'type' => '123']);
+        Whats::create(['webhook' => $dataToString, 'type' => $requestType]);
 
-        return $data['hub_challenge'];
+        // return $data['hub_challenge'];
+ 
     }
 
     /**
@@ -33,7 +35,11 @@ class WebController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $data = $request->all();
+        $requestType = $request->method();
+
+        $dataToString = json_encode($data);
+        Whats::create(['webhook' => $dataToString, 'type' => $requestType]);
     }
 
     /**
