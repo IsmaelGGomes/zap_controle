@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contato;
 use App\Models\Whats;
 use Illuminate\Http\Request;
 
@@ -72,5 +73,12 @@ class WebController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function show_table()
+    {
+        $item = Contato::all();
+
+        return view('dashboard', compact('item'));
     }
 }

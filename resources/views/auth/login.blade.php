@@ -20,10 +20,10 @@
         <div class="mx-auto w-full max-w-sm lg:w-96">
             <div class="">
                 <div class="flex justify-center">
-                    <img src="/images/login/clubedoor_semfundo.png" alt=""
+                    <img src="/images/login/logo_zapfrete.png" alt=""
                         class="object-contain w-[18em] h-[7em]">
                 </div>
-                <h2 class="mt-6 text-3xl font-semibold text-[#8ac543]">Entrar</h2>
+                <h2 class="mt-6 text-3xl font-semibold text-[#46b24e]">Entrar</h2>
                 <p class="mt-2 text-sm text-gray-600 max-w">Novo por aqui ? <a type="submit" href="register"
                         class="font-semibold text-md text-[#2A2365]">Registre-se agora.</a></p>
             </div>
@@ -48,7 +48,7 @@
             focus:outline-none
             text-white text-sm
             sm:text-base
-            bg-[#8ac543] 
+            bg-[#46b24e] 
             hover:bg-[#618E2C]
             rounded-2xl
             py-4
