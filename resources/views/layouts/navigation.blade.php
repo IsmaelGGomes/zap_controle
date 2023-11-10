@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img style="width: 18rem" class="h-auto object-content" src="/images/login/logo_zapfrete.png"
+                        <img style="width: 18rem" class="h-auto object-content" src="https://zapfretes.com.br/suporte/images/login/logo_zapfrete.png"
                             alt="">
                     </a>
                 </div>

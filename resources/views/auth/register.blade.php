@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://zapfretes.com.br/suporte/build/assets/app-f9083261.css">
     <title>Registro</title>
 </head>
 
@@ -29,7 +29,7 @@
           items-center
         ">
             <div class="w-auto h-auto">
-                <img src="/images/login/clubedoor_semfundo.png" alt="" class="object-contain sm:w-[18em] w-[14em] h-[7em]">
+                <img src="https://zapfretes.com.br/suporte/images/login/clubedoor_semfundo.png" alt="" class="object-contain sm:w-[18em] w-[14em] h-[7em]">
             </div>
             <div class="mt-2 self-center sm:text-[22px] text-[18px] text-gray-800 font-semibold">
                 Cadastro de usuário

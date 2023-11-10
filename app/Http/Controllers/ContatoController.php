@@ -61,7 +61,7 @@ class ContatoController extends Controller
 
         // Alert::success('Eviado com sucesso','Nossa equipe entrará em contato');
 
-        return redirect('/contato')->with('message', 'sucesso');
+        return redirect('/')->with('message', 'sucesso');
     }
 
     /**
