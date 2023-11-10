@@ -68,9 +68,20 @@
                 <div>
                     <div class="relative">
                         <span class="ml-2 text-black">Transportadora</span>
-                        <input name="transportadora" type="text" value="{{ old('transportadora') }}"
+                        <select class="w-full border-none shadow-md rounded-md text-black" name="transportadora" id="">
+                            <option value="Selecione" selected disabled>Selecione</option>
+                            <option value="Transval">Transval</option>
+                            <option value="Mafro">Mafro</option>
+                            <option value="Rodolider">Rodolider</option>
+                            <option value="Rezende">Rezende</option>
+                            <option value="Rodomacro">Rodomacro</option>
+                            <option value="JCL">JCL</option>
+                            <option value="RDM">RDM</option>
+                            <option value="Jorginho">Jorginho</option>
+                        </select>
+                        <!-- <input name="transportadora" type="text" value="{{ old('transportadora') }}"
                             class="{{ $errors->first('transportadora') ? 'w-full rounded-lg bg-white border-2 border-red-500 p-4 text-sm shadow-md' : 'w-full rounded-lg  p-4 pe-12 border-none text-sm shadow-md' }}"
-                            placeholder="Digite a transportadora" />
+                            placeholder="Digite a transportadora" /> -->
                         @error('transportadora')
                             <label class="text-red-500 font-semibold">Preencha esse campo !</label>
                         @enderror
