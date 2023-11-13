@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('add_remove');
             $table->string('nome');
             $table->string('filial');
-            $table->string('email')->unique();;
+            $table->string('email')->unique();
             $table->string('transportadora');
             $table->string('numero');
             $table->string('status')->nullable();

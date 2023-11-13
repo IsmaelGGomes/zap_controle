@@ -117,7 +117,11 @@
                         </td>
                         <td class="py-3 px-6 text-center">
                             <div class="flex items-center justify-center">
-                                <span>{{ $items->add_remove }}</span>
+                                @if ($items->add_remove == 'Remover')
+                                <span class="font-semibold text-red-600">{{ $items->add_remove }}</span>
+                                @else
+                                <span class="font-semibold text-green-600">{{ $items->add_remove }}</span>
+                                @endif                                
                             </div>
                         </td>
                         <td class="py-3 px-6 text-center">
@@ -129,13 +133,13 @@
                             <span class=" py-1 px-3 rounded-full text-md">{{ $items->filial }}</span>
                         </td>
                         <td class="py-3 px-6 text-center">
-                            <span class=" py-1 px-3 rounded-full text-md">{{ $items->email }}</span>
+                            <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">{{ $items->email }}</span>
                         </td>
                         <td class="py-3 px-6 text-center">
                             <span class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
                         </td>
                         <td class="py-3 px-6 text-center">
-                            <span class=" py-1 px-3 rounded-full text-md">{{ $items->numero }}</span>
+                            <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">{{ $items->numero }}</span>
                         </td>
                         <td class="py-3 px-6 text-center">
                             @if ($items->status == 'Concluído')
@@ -215,9 +219,17 @@
                         <div class="px-4  w-full rounded-xl">
                             <form action="#" method="" enctype="multipart/form-data">
                                 <div class="relative z-0 w-full mb-4 mt-10 group ">
-                                    <input id="add_remove" value="" type="text" name="add_remove" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" ">
-                                    <label for="" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Adicionar/Remover</label>
+                                    <label for="" class="text-gray-500">Adicionar/Remover</label>
+                                    <div class="flex flex-row">
+                                        <div class="">
+                                            <input name="add_remove" id="add_remove_remove" type="radio" value="Remover">
+                                            <label for="">Remover</label>
+                                        </div>
+                                        <div class="ml-4">
+                                            <input name="add_remove" id="add_remove_add" type="radio" value="Adicionar">
+                                            <label for="">Adicionar</label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="relative z-0 w-full mb-4 group">
@@ -292,8 +304,8 @@
                                 <br>
                                 <div class="space-x-4 py-4 text-right">
                                     <button onclick="inUpdate()" type="button" class="inline-block text-white focus:outline-none font-medium rounded-lg text-sm w-auto sm:w-1/5 px-3 py-2.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-white-800">Fechar</button>
-                                    <button onclick="sendUpdate()" type="button" class="inline-block text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-auto sm:w-1/5 px-3 py-2.5 text-center  hover:bg-blue-700 focus:ring-blue-800">
-                                        Editar
+                                    <button onclick="sendUpdate()" type="button" class="inline-block text-white bg-[#202356] hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-auto sm:w-1/5 px-3 py-2.5 text-center  hover:bg-blue-700 focus:ring-blue-800">
+                                        Salvar
                                     </button>
                                 </div>
                                 <input class="hidden" type="text" value="" id="edit_id" name="id">
@@ -463,7 +475,7 @@
         const contato = await getContato($id);
 
         for (var i in contato) {
-            document.querySelector("#add_remove").value = contato.add_remove;
+            /* document.querySelector("#add_remove").value = contato.add_remove; */
             document.querySelector("#nome").value = contato.nome;
             document.querySelector("#filial").value = contato.filial;
             document.querySelector("#email").value = contato.email;
@@ -476,6 +488,12 @@
             const status_andamento = document.querySelector("#status_andamento");
             const status_pendente = document.querySelector("#status_pendente");
             const status_descartado = document.querySelector("#status_descartado");
+
+            if (contato.add_remove == 'Remover') {
+                document.querySelector("#add_remove_remove").checked = true;
+            } else if (contato.add_remove == 'Adicionar') {
+                document.querySelector("#add_remove_add").checked = true;
+            }
 
             switch (contato.status) {
                 case "Pendente":

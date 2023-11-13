@@ -25,7 +25,7 @@ class ContatoPostRequest extends FormRequest
             'add_remove' => ['required','string'],
             'nome' => ['required','string'],
             'filial' => ['required','string'],
-            'email' => ['required','string'],
+            'email' => ['required','unique:contatos'],
             'transportadora' => ['required','string'],
             'numero' => ['required','string'],
             'status' => ['nullabe','string'],
@@ -37,7 +37,11 @@ class ContatoPostRequest extends FormRequest
     {
         return [
             'required'=>'Obrigatório preencher esse campo !',
-            'add_remove.required'=>'Selecione qual opção deseja realizar'
+            'add_remove.required'=>'Selecione qual opção deseja realizar',
+            'email' => [
+                'required' => 'Preencha esse campo !',
+                'unique' => 'E-mail existente, por favor insira outro !'
+            ],
         ];
     }
 }

@@ -106,7 +106,7 @@
                             class="{{ $errors->first('email') ? 'w-full rounded-lg border-2 border-red-500 p-4 text-sm shadow-md text-black' : 'w-full rounded-lg  border-none p-4 pe-12 text-black text-sm shadow-md' }}"
                             placeholder="Digite o e-mail" />
                         @error('email')
-                            <label class="text-red-500 font-semibold">Preencha esse campo !</label>
+                            <label class="text-red-500 font-semibold">{{$errors->first('email')}}</label>
                         @enderror
                     </div>
                 </div>
