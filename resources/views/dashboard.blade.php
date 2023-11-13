@@ -522,11 +522,21 @@
         const numero = document.querySelector("#numero");
         const id = document.querySelector("#id_form");
         var status_resul = '';
+        var radio_resul = '';
 
         const status_concluido = document.querySelector("#status_concluido");
         const status_andamento = document.querySelector("#status_andamento");
         const status_pendente = document.querySelector("#status_pendente");
         const status_descartado = document.querySelector("#status_descartado");
+
+        const radio_remover = document.querySelector("#add_remove_remove");
+        const radio_adicionar = document.querySelector("#add_remove_add");
+
+        if (radio_remover.checked == true) {
+            radio_resul = 'Remover';
+        } else if (radio_adicionar.checked == true) {
+            radio_resul = 'Adicionar';
+        }
 
         if (status_pendente.checked == true) {
             status_resul = 'Pendente';
@@ -539,7 +549,7 @@
         }
 
         const data = {
-            add_remove: add_remove.value,
+            add_remove: radio_resul,
             nome: nome.value,
             filial: filial.value,
             email: email.value,
