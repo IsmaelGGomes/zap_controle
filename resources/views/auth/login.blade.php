@@ -24,8 +24,8 @@
                         class="object-contain w-[18em] h-[7em]">
                 </div>
                 <h2 class="mt-6 text-3xl font-semibold text-[#46b24e]">Entrar</h2>
-                <p class="mt-2 text-sm text-gray-600 max-w">Novo por aqui ? <a type="submit" href="register"
-                        class="font-semibold text-md text-[#2A2365]">Registre-se agora.</a></p>
+                {{-- <p class="mt-2 text-sm text-gray-600 max-w">Novo por aqui ? <a type="submit" href="register"
+                        class="font-semibold text-md text-[#2A2365]">Registre-se agora.</a></p> --}}
             </div>
             <div class="mt-6">
 

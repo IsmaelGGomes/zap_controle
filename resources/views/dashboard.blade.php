@@ -107,7 +107,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-md font-light">
-                    @foreach ($item as $items)
+                    @forelse ($item as $items)
                     <input hidden name="id_form" id="id_form" value="{{ $items->id }}" type="text">
                     <tr class="border-b border-gray-200 hover:bg-gray-300">
                         <td class="py-3 px-6 text-center whitespace-nowrap">
@@ -139,12 +139,15 @@
                             <span class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
                         </td>
                         <td class="py-3 px-6 text-center">
-                            <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">{{ $items->numero }}</span>
+                            <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">
+                                {{ $items->numero }}
+                            </span>
                         </td>
                         <td class="py-3 px-6 text-center">
                             @if ($items->status == 'Concluído')
                             <span class=" py-1 px-3 rounded-full text-md bg-green-200 rounded-xl text-black py-1">{{ $items->status }}</span>
                             @elseif($items->status == 'Pendente')
+                            {{-- <a target="blank" href="https://wa.me/5566999949595/?text=fala ai meu amigo">{{$items->status}}</a> --}}
                             <span class=" py-1 px-3 rounded-full text-md bg-yellow-200 rounded-xl text-black py-1">{{ $items->status }}</span>
                             @elseif ($items->status == 'Andamento')
                             <span class=" py-1 px-3 rounded-full text-md bg-blue-200 rounded-xl text-black py-1">{{ $items->status }}</span>
@@ -200,7 +203,12 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    <tr>
+                        @empty
+                        <td class="text-center py-4 text-xl" colspan="9">Nenhum registro encotrado.</td>
+                    </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
             {{-- Modal update --}}
