@@ -19,21 +19,32 @@ class ContatoController extends Controller
         $data_request = $request->query();
 
         $query = Contato::query();
-        $item = Contato::all();
         $filters = $request->except('_token');
 
-        if ($request->has('status')) {
+        /* if (isset($request->status)) {
             $query->where('status', $request->status);
-            
-        } elseif ($request->has('filial')) {
+        } elseif (isset($request->filial)) {
             $query->where('filial', $request->filial);
-            
-        } elseif ($request->has('add_remove')) {
+        } elseif (isset($request->add_remove)) {
             $query->where('add_remove', $request->add_remove);
-            
-        } elseif ($request->has('transportadora')) {
+        } elseif (isset($request->transportadora)) {
             $query->where('transportadora', $request->transportadora);
         }
+        $item = $query->get(); */
+        $query = Contato::query();
+
+        if (isset($request->status) && ($request->status != null)){
+            $query->where('status',  request()->input('status'));
+        };
+        if (isset($request->add_remove) && ($request->add_remove != null)){
+            $query->where('add_remove',  request()->input('add_remove'));
+        };
+        if (isset($request->transportadora) && ($request->transportadora != null)){
+            $query->where('transportadora',  request()->input('transportadora'));
+        };
+        if (isset($request->filial) && ($request->transportadora != null)){
+            $query->where('filial',  request()->input('filial'));
+        };
         $item = $query->get();
 
         return view('dashboard', compact('item'));
