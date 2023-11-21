@@ -24,12 +24,13 @@ class ContatoPutRequest extends FormRequest
         return [
             'add_remove' => ['nullabe','string'],
             'nome' => ['required','string'],
-            'filial' => ['required','string'],
             'email' => ['required','string'],
             'transportadora' => ['required','string'],
             'numero' => ['required','string'],
             'status' => ['required','string'],
             'edit' => ['nullabe','string'],
+            'estado' => ['required','string'],
+            'cidade' => ['required','string'],
         ];
     }
 

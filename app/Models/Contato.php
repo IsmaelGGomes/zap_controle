@@ -12,12 +12,14 @@ class Contato extends Model
     protected $fillable = [
         'add_remove',
         'nome',
-        'filial',
         'email',
         'transportadora',
         'numero',
         'status',
         'edit',
+        'estado',
+        'cidade',
+        'filial'
     ];
 
     protected $table = 'contatos';
