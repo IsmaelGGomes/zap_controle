@@ -50,7 +50,7 @@
                         <select name="filial" id="filial" class="select_filial w-full max-w-xs focus:outline-none text-md">
                             <option disabled selected value="">Selecione</option>
                             @forelse ($data_filial as $data_filials)
-                                <option value="{{$data_filials->cidade}}">{{ $data_filials->cidade }}</option>
+                                <option value="{{$data_filials}}">{{ $data_filials}}</option>
                                 @empty
                                 <option disabled value="">Sem Filiais</option>
                             @endforelse
@@ -120,7 +120,7 @@
                             @forelse ($item as $items)
                                 <input hidden name="id_form" id="id_form" value="{{ $items->id }}" type="text">
                                 <tr class="border-b border-gray-200 hover:bg-gray-300">
-                                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                                    <td class="py-3 px-6 text-center ">
                                         <div class="flex items-center justify-center">
                                             <span class="font-medium">{{ $items->id }}</span>
                                         </div>
@@ -141,18 +141,18 @@
                                         </span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
-                                        <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">{{ $items->cidade }}</span>
+                                        <span class=" py-1 px-3 rounded-full text-md">{{ $items->cidade }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <span
-                                            class=" py-1 px-3 rounded-full text-md whitespace-nowrap">{{ $items->email }}</span>
+                                            class=" py-1 px-3 rounded-full text-md">{{ $items->email }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <span
-                                            class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
+                                            class=" py-1 px-3  rounded-full text-md whitespace-nowrap overflow-x-auto">{{ $items->nome }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
-                                        <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">
+                                        <span class=" py-1 px-3 rounded-full text-md">
                                             {{ $items->numero }}
                                         </span>
                                     </td>
