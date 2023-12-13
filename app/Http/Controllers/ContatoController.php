@@ -34,8 +34,9 @@ class ContatoController extends Controller
         };
         $item = $query->get();
 
-        $data_filial = Contato::all();
-        /* $f = $data_filial->pluck('filial'); */
+        // $data_filial = Contato::all();
+        // $data_filial = $data_filial->distinct('filial');
+        $data_filial = Contato::all()->pluck('cidade')->unique();
 
         return view('dashboard', compact('item', 'data_filial'));
     }
