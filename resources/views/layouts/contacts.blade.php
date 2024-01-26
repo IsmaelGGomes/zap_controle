@@ -10,8 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {{-- <link rel="stylesheet" href="https://zapfretes.com.br/suporte/build/assets/app-f9083261.css"> --}}
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="https://zapfretes.com.br/suporte/build/assets/app-f9083261.css">
+    
     {{-- jquery --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     {{-- select --}}
@@ -31,7 +31,7 @@
                 </p> --}}
             </div>
 
-            <form action="/dashboard" method="POST"
+            <form action="https://zapfretes.com.br/suporte/dashboard" method="POST"
                 class="mt-6 bg-white space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 mb-10">
                 {{-- <p class="text-center text-lg font-medium">ZapFretes | Suporte</p> --}}
                 @csrf
@@ -107,13 +107,13 @@
                         <div class="flex flex-row gap-4 w-full h-[40px]">
                             <div class="">
                                 <label for="" class="text-black">Estado</label>
-                                <select name="estado" id="estados" class="select_estados w-[200px]">
+                                <select style="width: 200px" name="estado" id="estados" class="select_estados">
                                     <option></option>
                                 </select>
                             </div>
                             <div class="">
                                 <label for="" class="text-black">Cidade</label>
-                                <select name="cidade" id="cidades" class="select_cidades w-[200px]">
+                                <select style="width: 200px" name="cidade" id="cidades" class="select_cidades">
                                 </select>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
         //select cidades
         $('.select_cidades').select2();
 
-        $.getJSON('/storage/json/estados_cidades.json', function(data) {
+        $.getJSON('/suporte/storage/app/public/json/estados_cidades.json', function(data) {
 
             var items = [];
             var options = '<option value="0" disabled selected>Escolha um estado</option>';
