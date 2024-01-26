@@ -1,4 +1,4 @@
 *
 public/
-!public/json/*
+!public/json/estados_cidades.json
 !.gitignore
