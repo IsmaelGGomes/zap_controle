@@ -6,12 +6,12 @@
     </x-slot>
 
     <div class="py-12 w-full overflow-x-auto px-2 bg-[#1d232a]">
-        <section class="flex mx-auto pb-12 px-4 sm:px-6 lg:px-8 ">
+        <section class="flex mx-auto pb-2 px-4 sm:px-6 lg:px-8 ">
             <form action="{{ config('app.url') }}/dashboard" method="get"
                 class="bg-gray-200 rounded-xl py-4 justify-center items-center flex flex-col gap-8 px-4 h-[50%] mr-10 ml-18">
                 <div
                     class="w-40 h-[14%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
-                    <div class="mb-4 text-gray-700 font-semibold">
+                    <div class="mb-4 text-gray-700 font-semibold whitespace-nowrap">
                         Adicionar/Remover
                     </div>
                     <div class="w-[120px]">
@@ -106,7 +106,7 @@
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm">
                                 <th class="py-3 px-6 text-left">ID</th>
-                                <th class="py-3 px-6 text-left">Adicionar/Remover</th>
+                                <th class="py-3 px-6 text-left whitespace-nowrap">Adicionar/Remover</th>
                                 <th class="py-3 px-6 text-center whitespace-nowrap">Transportadora</th>
                                 <th class="py-3 px-6 text-center">Filial</th>
                                 <th class="py-3 px-6 text-center">Email</th>
@@ -143,16 +143,14 @@
                                     <td class="py-3 px-6 text-center">
                                         <span class=" py-1 px-3 rounded-full text-md">{{ $items->cidade }}</span>
                                     </td>
-                                    <td class="py-3 px-6 text-center">
-                                        <span
-                                            class=" py-1 px-3 rounded-full text-md">{{ $items->email }}</span>
+                                    <td style="overflow-x: auto;" class="max-w-[12rem] text-center">
+                                        <span  style="white-space: nowrap;" class="text-center text-md">{{ $items->email }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
-                                        <span
-                                            class=" py-1 px-3  rounded-full text-md whitespace-nowrap overflow-x-auto">{{ $items->nome }}</span>
+                                        <span class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
-                                        <span class=" py-1 px-3 rounded-full text-md">
+                                        <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">
                                             {{ $items->numero }}
                                         </span>
                                     </td>
@@ -229,6 +227,11 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="w-full flex p-4 flex-row justify-center">
+                        <div class="flex">
+                            {{ $item->withQueryString()->links() }}
+                        </div>
+                    </div>
                     {{-- Modal update --}}
                     <div id="myModalUpdate"
                         class="fixed hidden inset-0 bg-opacity-50 h-screen w-full overflow-y-auto">

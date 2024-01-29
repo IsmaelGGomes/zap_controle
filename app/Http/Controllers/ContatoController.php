@@ -32,7 +32,7 @@ class ContatoController extends Controller
         if (isset($request->cidade) && ($request->cidade != null)){
             $query->where('cidade',  request()->input('cidade'));
         };
-        $item = $query->get();
+        $item = $query->paginate(8);
 
         // $data_filial = Contato::all();
         $data_filial = Contato::all()->pluck('cidade')->unique();
