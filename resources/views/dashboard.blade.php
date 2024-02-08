@@ -6,6 +6,82 @@
     </x-slot>
 
     <div class="py-12 w-full overflow-x-auto px-2 bg-[#1d232a]">
+        <div onclick="viewAddAtendente()"
+            class="bg-gray-200 rounded-xl py-4 w-48 ml-8 mb-2 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110">
+            <div class="text-center text-[#1d232a] font-semibold ">
+                Adicionar Atendentes
+            </div>
+        </div>
+        <div id="add_atendente" class="fixed hidden inset-0 bg-gray-500 bg-opacity-50 h-screen w-full overflow-y-auto ">
+            <div
+                class="absolute rounded-md bg-white md:left-[50%] left-1/2 md:top-[48%] top-1/2 md:translate-y-[-50%] md:translate-x-[-50%] w-auto h-auto translate-y-[-40%] translate-x-[-41%]">
+                <div class="px-10 py-10 rounded-xl">
+                    <div class="flex flex-row gap-8">
+                        <div class="flex flex-col border border-1 px-10 py-2 rounded-md">
+                            <div class="text-center">
+                                <h3 class="text-black mb-4 font-semibold">Formulário</h3>
+                            </div>
+                            <form method="POST" action="{{ config('app.url') }}/atendente">
+                                @csrf
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <input id="atendente" type="text" name="atendente"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" ">
+                                    <label for=""
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nome
+                                        do Atendente</label>
+                                </div>
+
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <input id="numero_atendente" type="number" name="numero_atendente"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" ">
+                                    <label for=""
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                        Número</label>
+                                </div>
+                                <button class="rounded-xl py-2 px-4 bg-slate-600 text-white border-none">
+                                    Salvar
+                                </button>
+                            </form>
+                        </div>
+                        <div class="overflow-y-auto h-[14rem]">
+                            <table class="min-w-full divide-y divide-gray-200 ">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Nome</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Número</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($data_atendente as $items )
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{$items->atendente}}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{$items->numero_atendente}}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <button class="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out"
+                                                >Excluir
+                                            </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="flex mx-auto pb-2 px-4 sm:px-6 lg:px-8 ">
             <form action="{{ config('app.url') }}/dashboard" method="get"
                 class="bg-gray-200 rounded-xl py-4 justify-center items-center flex flex-col gap-8 px-4 h-[50%] mr-10 ml-18">
@@ -47,11 +123,12 @@
                         Filial
                     </div>
                     <div class="w-[120px]">
-                        <select name="filial" id="filial" class="select_filial w-full max-w-xs focus:outline-none text-md">
+                        <select name="filial" id="filial"
+                            class="select_filial w-full max-w-xs focus:outline-none text-md">
                             <option disabled selected value="">Selecione</option>
                             @forelse ($data_filial as $data_filials)
-                                <option value="{{$data_filials}}">{{ $data_filials}}</option>
-                                @empty
+                                <option value="{{ $data_filials }}">{{ $data_filials }}</option>
+                            @empty
                                 <option disabled value="">Sem Filiais</option>
                             @endforelse
                         </select>
@@ -118,7 +195,8 @@
                         </thead>
                         <tbody class="text-gray-600 text-md font-light">
                             @forelse ($item as $items)
-                                <input hidden name="id_form" id="id_form" value="{{ $items->id }}" type="text">
+                                <input hidden name="id_form" id="id_form" value="{{ $items->id }}"
+                                    type="text">
                                 <tr class="border-b border-gray-200 hover:bg-gray-300">
                                     <td class="py-3 px-6 text-center ">
                                         <div class="flex items-center justify-center">
@@ -128,7 +206,8 @@
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex items-center justify-center">
                                             @if ($items->add_remove == 'Remover')
-                                                <span class="font-semibold text-red-600">{{ $items->add_remove }}</span>
+                                                <span
+                                                    class="font-semibold text-red-600">{{ $items->add_remove }}</span>
                                             @else
                                                 <span
                                                     class="font-semibold text-green-600">{{ $items->add_remove }}</span>
@@ -144,10 +223,12 @@
                                         <span class=" py-1 px-3 rounded-full text-md">{{ $items->cidade }}</span>
                                     </td>
                                     <td style="overflow-x: auto;" class="max-w-[12rem] text-center">
-                                        <span  style="white-space: nowrap;" class="text-center text-md">{{ $items->email }}</span>
+                                        <span style="white-space: nowrap;"
+                                            class="text-center text-md">{{ $items->email }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
-                                        <span class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
+                                        <span
+                                            class=" py-1 px-3  rounded-full text-md whitespace-nowrap">{{ $items->nome }}</span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <span class=" py-1 px-3 rounded-full text-md whitespace-nowrap">
@@ -176,44 +257,44 @@
                                         <div class="flex item-center justify-center">
                                             {{-- <?php
                                             echo '<button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" id="myBtnUpdate" onclick="viewModal()">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" id="myBtnUpdate" onclick="viewModal()">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
                                             ?> --}}
                                             <?php
                                             echo '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="w-4 mr-2 cursor-pointer transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" onclick="inUpdate(), editContato(' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="w-4 mr-2 cursor-pointer transform hover:text-purple-500 hover:scale-110" 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" onclick="inUpdate(), editContato(' .
                                                 $items->id .
                                                 ')">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
                                             ?>
                                             <?php
                                             echo '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        type="button" onclick="messageDelete(' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        type="button" onclick="messageDelete(' .
                                                 $items->id .
                                                 ')">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
                                             ?>
                                         </div>
                                     </td>
@@ -417,29 +498,18 @@
     }
 </style>
 <script>
-    // function edit_item() {
-    //     console.log('ok');
-    //     swal({
-    //         title: 'Input email address',
-    //         input: 'text',
-    //         inputLabel: 'Your email address',
-    //         inputPlaceholder: 'Enter your email address'
-    //         // inputValidator: (value) => {
-    //         //     if (!value) {
-    //         //         return 'You need to write something!'
-    //         //     }
-    //         // }
-    //     })
-    // }
-
     //modal update
 
     var modalUpdate = document.getElementById("myModalUpdate");
     var btnUpdate = document.getElementById("myBtnUpdate");
+    var atendente_modal = document.getElementById("add_atendente");
 
     window.onclick = function(event) {
         if (event.target == modalUpdate) {
             modalUpdate.style.display = "none";
+        }
+        if (event.target == atendente_modal) {
+            atendente_modal.style.display = "none";
         }
     }
 
@@ -460,6 +530,14 @@
             modalUpdate.style.display = "none";
         } else {
             modalUpdate.style.display = "block";
+        }
+    }
+
+    function viewAddAtendente() {
+        if (atendente_modal.style.display == "block") {
+            atendente_modal.style.display = "none";
+        } else {
+            atendente_modal.style.display = "block";
         }
     }
 
@@ -644,6 +722,6 @@
 <script>
     $(document).ready(function() {
         //select filiais
-        $('.select_filial').select2(); 
+        $('.select_filial').select2();
     });
 </script>

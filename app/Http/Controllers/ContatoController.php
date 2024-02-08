@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContatoPostRequest;
 use App\Http\Requests\ContatoPutRequest;
+use App\Models\Atendente;
 use App\Models\Contato;
 use GrahamCampbell\ResultType\Success;
 use GuzzleHttp\Client;
@@ -39,8 +40,9 @@ class ContatoController extends Controller
         // $data_filial = Contato::all();
         $data_filial = Contato::all()->pluck('cidade')->unique();
         /* $f = $data_filial->pluck('filial'); */
+        $data_atendente = Atendente::all();
 
-        return view('dashboard', compact('item', 'data_filial'));
+        return view('dashboard', compact('item', 'data_filial', 'data_atendente'));
     }
 
     /**
