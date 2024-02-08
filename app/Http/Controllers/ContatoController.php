@@ -6,7 +6,9 @@ use App\Http\Requests\ContatoPostRequest;
 use App\Http\Requests\ContatoPutRequest;
 use App\Models\Contato;
 use GrahamCampbell\ResultType\Success;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ContatoController extends Controller
@@ -54,12 +56,26 @@ class ContatoController extends Controller
      */
     public function store(ContatoPostRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->all();
 
         $data['status'] = 'Pendente';
         $data['edit'] = 'ativo';
         $data['filial'] = '';
 
+        // Fazer a request para a URL
+        $client = new Client();
+
+        $response = Http::post('https://backend.botconversa.com.br/api/v1/webhooks-automation/catch/17618/twIgzNV2QSjl/', [
+            'cidade' => $data['cidade'],
+            'add_remove' => $data['add_remove'],
+            'transportadora' => $data['transportadora'],
+            'numero' => $data['numero'],
+            'estado' => $data['estado'],
+            'nome' => $data['nome'],
+            'email' => $data['email'],
+            'atendente' => '+5566999949595'
+        ]);
+        /* $response = $client->request('GET', 'viacep.com.br/ws/78635000/json/'); */
         Contato::create($data);
 
         // Alert::success('Eviado com sucesso','Nossa equipe entrará em contato');
@@ -94,7 +110,7 @@ class ContatoController extends Controller
 
         session()->flash('Status', 'Status atualizado com sucesso !');
 
-        return $contato->update($validate);;
+        return $contato->update($validate);
     }
 
     /**
