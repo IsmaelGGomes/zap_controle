@@ -70,7 +70,18 @@ class ContatoController extends Controller
         // Fazer a request para a URL
         $client = new Client();
 
-        $response = Http::post('https://backend.botconversa.com.br/api/v1/webhooks-automation/catch/17618/twIgzNV2QSjl/', [
+        //criar um array para sortear o atendente
+        $atendentes = Atendente::all()->pluck('numero_atendente')->first();
+        $webhook = Webhook::all()->pluck('nome_transportadora')->unique();
+        foreach ($webhook as $value) {
+            if ($data['transportadora'] == $value) {
+              $data_webhook = $value;
+            }
+        }
+        
+        
+
+        $response = Http::post($data_webhook, [
             'cidade' => $data['cidade'],
             'add_remove' => $data['add_remove'],
             'transportadora' => $data['transportadora'],
@@ -78,7 +89,7 @@ class ContatoController extends Controller
             'estado' => $data['estado'],
             'nome' => $data['nome'],
             'email' => $data['email'],
-            'atendente' => '+5566999949595'
+            'atendente' => $atendentes
         ]);
         /* $response = $client->request('GET', 'viacep.com.br/ws/78635000/json/'); */
         Contato::create($data);

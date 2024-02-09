@@ -153,7 +153,7 @@
                                 </div>
 
                                 <div class="relative z-0 w-full mb-6 group">
-                                    <input id="numero_atendente" type="number" name="numero_atendente"
+                                    <input id="numero_atendente" type="text" name="numero_atendente"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
                             border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         placeholder=" ">
