@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atendente;
+use App\Models\Webhook;
 use App\Http\Controllers\Controller;
+use App\Models\Atendente;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
-class AtendenteController extends Controller
+class WebhookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class AtendenteController extends Controller
     {
         $data = $request->all();
         
-        Atendente::create($data);
+        Webhook::create($data);
         
         return redirect('/dashboard');
     }
@@ -40,7 +40,7 @@ class AtendenteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Atendente $atendente)
+    public function show(Webhook $webhook)
     {
         //
     }
@@ -48,7 +48,7 @@ class AtendenteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Atendente $atendente)
+    public function edit(Webhook $webhook)
     {
         //
     }
@@ -56,7 +56,7 @@ class AtendenteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Atendente $atendente)
+    public function update(Request $request, Webhook $webhook)
     {
         //
     }
@@ -66,9 +66,9 @@ class AtendenteController extends Controller
      */
     public function destroy($id)
     {
-        $data = Atendente::find($id);
-
+        $data = Webhook::find($id);
         $data->delete();
+
         return Redirect('/dashboard');
     }
 }

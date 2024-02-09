@@ -5,17 +5,136 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 w-full overflow-x-auto px-2 bg-[#1d232a]">
-        <div onclick="viewAddAtendente()"
-            class="bg-gray-200 rounded-xl py-4 w-48 ml-8 mb-2 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110">
-            <div class="text-center text-[#1d232a] font-semibold ">
-                Adicionar Atendentes
+    <div class="py-12 w-full px-2 flex flex-row h-auto bg-[#1d232a]">
+        <div class="flex flex-col">
+            <div class="flex flex-col w-40 ml-14 mb-4 space-y-2">
+                <div onclick="viewAddAtendente()"
+                    class="inline-flex items-center justify-center w-full px-2 py-1 mb-2 text-md text-white bg-green-500 rounded-md hover:bg-green-400 sm:w-auto sm:mb-0 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    Atendentes
+                </div>
+                <div onclick="viewAddWebhook()" 
+                    class="inline-flex items-center justify-center w-full px-2 py-1 mb-2 text-md text-white bg-violet-800 rounded-md hover:bg-violet-900 sm:w-auto sm:mb-0 cursor-pointer transition duration-300 ease-in-out transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 0 1 1.06 0Z" />
+                    </svg>
+                    Webhooks
+                </div>
             </div>
+            <form action="{{ config('app.url') }}/dashboard" method="get"
+                class="bg-gray-200 rounded-xl py-2 justify-center items-center flex flex-col gap-8 px-4 h-auto w-[200px] mr-10 ml-8">
+                <div
+                    class="w-40 h-[18%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
+                    <div class="mb-4 text-gray-700 font-semibold whitespace-nowrap">
+                        Adicionar/Remover
+                    </div>
+                    <div class="w-[120px]">
+                        <select name="add_remove" class="select w-full max-w-xs focus:outline-none text-md">
+                            <option disabled selected>Selecione</option>
+                            <option class="text-md" value="Adicionar">Adicionar</option>
+                            <option class="text-md" value="Remover">Remover</option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    class="w-40 h-[18%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
+                    <div class="mb-4 text-gray-700 font-semibold">
+                        Transportadora
+                    </div>
+                    <div class="w-[120px]">
+                        <select class="w-full select" name="transportadora" id="">
+                            <option value="Selecione" selected disabled>Selecione</option>
+                            <option value="Transval">Transval</option>
+                            <option value="Mafro">Mafro</option>
+                            <option value="Rodolider">Rodolider</option>
+                            <option value="Rezende">Rezende</option>
+                            <option value="Rodomacro">Rodomacro</option>
+                            <option value="JCL">JCL</option>
+                            <option value="RDM">RDM</option>
+                            <option value="Jorginho">Jorginho</option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    class="w-40 h-[18%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
+                    <div class="mb-4 text-gray-700 font-semibold">
+                        Filial
+                    </div>
+                    <div class="w-[120px]">
+                        <select name="filial" id="filial"
+                            class="select_filial w-full max-w-xs focus:outline-none text-md">
+                            <option disabled selected value="">Selecione</option>
+                            @forelse ($data_filial as $data_filials)
+                                <option value="{{ $data_filials }}">{{ $data_filials }}</option>
+                            @empty
+                                <option disabled value="">Sem Filiais</option>
+                            @endforelse
+                        </select>
+                    </div>
+                </div>
+
+                <div
+                    class="w-40 h-[18%] p-2 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
+                    <div class="mb-4 text-gray-700 font-semibold">
+                        Status
+                    </div>
+                    <div class="w-[120px]">
+                        {{-- <form action="{{ config('app.url') }}/dashboard" method="get">
+                        <details class="dropdown">
+                            <summary class="m-1 btn">Selecione</summary>
+                            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 gap-2">
+                                <li onclick="modify_params()">
+                                    <input id="search_concluido" type="none" class="bg-green-200 hover:bg-green-500 text-black hover:text-black" name="status" value="Concluído">
+                                </li>
+                                <li onclick="modify_params()">
+                                    <input id="search_pendente" type="none" class="bg-yellow-200 hover:bg-yellow-500 text-black hover:text-black" name="status" value="Pendente">
+                                </li>
+                                <li onclick="modify_params()">
+                                    <input id="search_descartado" type="none" class="bg-red-200 hover:bg-red-500 text-black hover:text-black" name="status" value="Descartado">
+                                </li>
+                                <li onclick="modify_params()">
+                                    <input id="search_andamento" type="none" class="bg-blue-200 hover:bg-blue-500 text-black hover:text-black" name="status" value="Andamento">
+                                </li>
+                            </ul>
+                        </details>
+                        </form> --}}
+                        <select name="status" class="select w-full max-w-xs focus:outline-none text-md">
+                            <option disabled selected>Selecione</option>
+                            <option class="text-md" value="Andamento">Andamento</option>
+                            <option class="text-md" value="Concluído">Concluído</option>
+                            <option class="text-md" value="Descartado">Descartado</option>
+                            <option class="text-md" value="Pendente">Pendente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div class="items-center flex justify-center flex-col">
+                        <hr class="w-full border-1 border-gray-700 mb-2" />
+                        <button class="btn" type="submit">Enviar</button>
+                    </div>
+                </div>
+
+            </form>
         </div>
-        <div id="add_atendente" class="fixed hidden inset-0 bg-gray-500 bg-opacity-50 h-screen w-full overflow-y-auto ">
+        {{-- Modal adicionar atendentes --}}
+        <div id="add_atendente" class="fixed hidden inset-0 z-10 bg-gray-500 bg-opacity-50 h-screen w-full overflow-y-auto ">
             <div
                 class="absolute rounded-md bg-white md:left-[50%] left-1/2 md:top-[48%] top-1/2 md:translate-y-[-50%] md:translate-x-[-50%] w-auto h-auto translate-y-[-40%] translate-x-[-41%]">
-                <div class="px-10 py-10 rounded-xl">
+                <div class="px-10 py-4 rounded-xl">
+                    <div class="flex flex-row justify-end">
+                        <svg onclick="viewAddAtendente()" class="cursor-pointer w-6 h-6" aria-hidden="true"
+                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
+                    </div>
                     <div class="flex flex-row gap-8">
                         <div class="flex flex-col border border-1 px-10 py-2 rounded-md">
                             <div class="text-center">
@@ -47,7 +166,9 @@
                                 </button>
                             </form>
                         </div>
+
                         <div class="overflow-y-auto h-[14rem]">
+
                             <table class="min-w-full divide-y divide-gray-200 ">
                                 <thead>
                                     <tr>
@@ -63,14 +184,18 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach ($data_atendente as $items )
+                                    @foreach ($data_atendente as $items)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{$items->atendente}}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{$items->numero_atendente}}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $items->atendente }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $items->numero_atendente }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <button class="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out"
-                                                >Excluir
-                                            </button>
+                                            <form action="{{ config('app.url') }}/atendente/{{$items->id}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="ml-2 px-2 py-[2px] font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">Excluir
+                                                </button>
+                                            </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,103 +207,98 @@
                 </div>
             </div>
         </div>
-        <section class="flex mx-auto pb-2 px-4 sm:px-6 lg:px-8 ">
-            <form action="{{ config('app.url') }}/dashboard" method="get"
-                class="bg-gray-200 rounded-xl py-4 justify-center items-center flex flex-col gap-8 px-4 h-[50%] mr-10 ml-18">
-                <div
-                    class="w-40 h-[14%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
-                    <div class="mb-4 text-gray-700 font-semibold whitespace-nowrap">
-                        Adicionar/Remover
+        {{-- Modal adicionar webhooks --}}
+        <div id="add_webhook" class="fixed hidden inset-0 z-10 bg-gray-500 bg-opacity-50 h-screen w-full overflow-y-auto ">
+            <div
+                class="absolute rounded-md bg-white md:left-[50%] left-1/2 md:top-[48%] top-1/2 md:translate-y-[-50%] md:translate-x-[-50%] w-auto h-auto translate-y-[-40%] translate-x-[-41%]">
+                <div class="px-10 py-4 rounded-xl">
+                    <div class="flex flex-row justify-end">
+                        <svg onclick="viewAddWebhook()" class="cursor-pointer w-6 h-6" aria-hidden="true"
+                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </svg>
                     </div>
-                    <div class="w-[120px]">
-                        <select name="add_remove" class="select w-full max-w-xs focus:outline-none text-md">
-                            <option disabled selected>Selecione</option>
-                            <option class="text-md" value="Adicionar">Adicionar</option>
-                            <option class="text-md" value="Remover">Remover</option>
-                        </select>
-                    </div>
-                </div>
-                <div
-                    class="w-40 h-[14%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
-                    <div class="mb-4 text-gray-700 font-semibold">
-                        Transportadora
-                    </div>
-                    <div class="w-[120px]">
-                        <select class="w-full select" name="transportadora" id="">
-                            <option value="Selecione" selected disabled>Selecione</option>
-                            <option value="Transval">Transval</option>
-                            <option value="Mafro">Mafro</option>
-                            <option value="Rodolider">Rodolider</option>
-                            <option value="Rezende">Rezende</option>
-                            <option value="Rodomacro">Rodomacro</option>
-                            <option value="JCL">JCL</option>
-                            <option value="RDM">RDM</option>
-                            <option value="Jorginho">Jorginho</option>
-                        </select>
-                    </div>
-                </div>
-                <div
-                    class="w-40 h-[14%] p-4 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
-                    <div class="mb-4 text-gray-700 font-semibold">
-                        Filial
-                    </div>
-                    <div class="w-[120px]">
-                        <select name="filial" id="filial"
-                            class="select_filial w-full max-w-xs focus:outline-none text-md">
-                            <option disabled selected value="">Selecione</option>
-                            @forelse ($data_filial as $data_filials)
-                                <option value="{{ $data_filials }}">{{ $data_filials }}</option>
-                            @empty
-                                <option disabled value="">Sem Filiais</option>
-                            @endforelse
-                        </select>
-                    </div>
-                </div>
+                    <div class="flex flex-row gap-8">
+                        <div class="flex flex-col border border-1 px-10 py-2 rounded-md">
+                            <div class="text-center">
+                                <h3 class="text-black mb-4 font-semibold">Formulário</h3>
+                            </div>
+                            <form method="POST" action="{{ config('app.url') }}/webhook/">
+                                @csrf
+                                <div class="relative z-0 w-full mb-6 group">
+                                        <select class="w-full border border-1 rounded-xl mb-2 text-sm font-medium text-gray-900 " name="nome_transportadora" id="">
+                                            <option value="Selecione" selected disabled>Selecione</option>
+                                            <option value="Transval">Transval</option>
+                                            <option value="Mafro">Mafro</option>
+                                            <option value="Rodolider">Rodolider</option>
+                                            <option value="Rezende">Rezende</option>
+                                            <option value="Rodomacro">Rodomacro</option>
+                                            <option value="JCL">JCL</option>
+                                            <option value="RDM">RDM</option>
+                                            <option value="Jorginho">Jorginho</option>
+                                        </select>
+                                </div>
 
-                <div
-                    class="w-40 h-[14%] p-2 border border-2 border-gray-400 justify-center flex flex-col rounded-xl items-center">
-                    <div class="mb-4 text-gray-700 font-semibold">
-                        Status
-                    </div>
-                    <div class="w-[120px]">
-                        {{-- <form action="{{ config('app.url') }}/dashboard" method="get">
-                        <details class="dropdown">
-                            <summary class="m-1 btn">Selecione</summary>
-                            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 gap-2">
-                                <li onclick="modify_params()">
-                                    <input id="search_concluido" type="none" class="bg-green-200 hover:bg-green-500 text-black hover:text-black" name="status" value="Concluído">
-                                </li>
-                                <li onclick="modify_params()">
-                                    <input id="search_pendente" type="none" class="bg-yellow-200 hover:bg-yellow-500 text-black hover:text-black" name="status" value="Pendente">
-                                </li>
-                                <li onclick="modify_params()">
-                                    <input id="search_descartado" type="none" class="bg-red-200 hover:bg-red-500 text-black hover:text-black" name="status" value="Descartado">
-                                </li>
-                                <li onclick="modify_params()">
-                                    <input id="search_andamento" type="none" class="bg-blue-200 hover:bg-blue-500 text-black hover:text-black" name="status" value="Andamento">
-                                </li>
-                            </ul>
-                        </details>
-            </form> --}}
-                        <select name="status" class="select w-full max-w-xs focus:outline-none text-md">
-                            <option disabled selected>Selecione</option>
-                            <option class="text-md" value="Andamento">Andamento</option>
-                            <option class="text-md" value="Concluído">Concluído</option>
-                            <option class="text-md" value="Descartado">Descartado</option>
-                            <option class="text-md" value="Pendente">Pendente</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="w-full">
-                    <div class="items-center flex justify-center flex-col">
-                        <hr class="w-full border-1 border-gray-700 mb-2" />
-                        <button class="btn" type="submit">Enviar</button>
-                    </div>
-                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <input id="webhook" type="text" name="webhook"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" ">
+                                    <label for=""
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                        Webhook</label>
+                                </div>
+                                <button class="rounded-xl py-2 px-4 bg-slate-600 text-white border-none">
+                                    Salvar
+                                </button>
+                            </form>
+                        </div>
 
-            </form>
+                        <div class="overflow-y-auto h-[14rem]">
+
+                            <table class="min-w-full divide-y divide-gray-200 ">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Nome</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Número</th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($data_webhook as $items)
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $items->nome_transportadora }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $items->webhook }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            <form action="{{ config('app.url') }}/webhook/{{ $items->id }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="ml-2 px-2 py-[2px] font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">Excluir
+                                                </button>
+                                            </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="flex pb-2 mt-4">
             <div class="">
-                <div class="bg-gray-100 text-gray-900 rounded-xl ml-8">
+                <div class="bg-gray-100 text-gray-900 rounded-xl ">
                     <table class="max-w-[90em] table-auto w-full">
                         <thead>
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm">
@@ -255,46 +375,33 @@
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex item-center justify-center">
-                                            {{-- <?php
-                                            echo '<button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" id="myBtnUpdate" onclick="viewModal()">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
-                                            ?> --}}
                                             <?php
                                             echo '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="w-4 mr-2 cursor-pointer transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    type="button" onclick="inUpdate(), editContato(' .
+                                                    <button class="w-4 mr-2 cursor-pointer transform hover:text-purple-500 hover:scale-110" 
+                                                type="button" onclick="inUpdate(), editContato(' .
                                                 $items->id .
                                                 ')">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                </svg>
+                                            </button>';
                                             ?>
                                             <?php
                                             echo '
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        type="button" onclick="messageDelete(' .
+                                                <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110" 
+                                                    type="button" onclick="messageDelete(' .
                                                 $items->id .
                                                 ')">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-width="2"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </svg>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>';
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>';
                                             ?>
                                         </div>
                                     </td>
@@ -319,7 +426,7 @@
                         <!-- Modal content updatebook -->
                         <div
                             class="modal-contentUpdate absolute bg-white md:left-[50%] left-1/2 md:top-[48%] 
-                                    top-1/2 md:translate-y-[-50%] md:translate-x-[-50%] w-auto h-auto translate-y-[-40%] translate-x-[-41%]">
+                                top-1/2 md:translate-y-[-50%] md:translate-x-[-50%] w-auto h-auto translate-y-[-40%] translate-x-[-41%]">
                             <div class="w-full flex justify-end p-4">
                                 <svg onclick="inUpdate()" class="cursor-pointer w-6 h-6" aria-hidden="true"
                                     fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
@@ -351,7 +458,7 @@
                                         <div class="relative z-0 w-full mb-4 group">
                                             <input id="nome" type="text" name="nome" id=""
                                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                 placeholder=" ">
                                             <label for=""
                                                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nome</label>
@@ -361,7 +468,7 @@
                                             <div class="relative z-0 w-full mb-4 group">
                                                 <input id="cidade" type="text" name="cidade"
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" ">
                                                 <label for=""
                                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Filial</label>
@@ -369,7 +476,7 @@
                                             <div class="relative z-0 w-full mb-6 group">
                                                 <input id="email" type="text" name="email" id=""
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" ">
                                                 <label for=""
                                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
@@ -381,7 +488,7 @@
                                                 <input id="transportadora" type="text" name="transportadora"
                                                     id=""
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" ">
                                                 <label for=""
                                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Transportadora</label>
@@ -389,7 +496,7 @@
                                             <div class="relative z-0 w-full mb-6 group">
                                                 <input id="numero" type="" name="numero"
                                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
-                                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                                     placeholder=" ">
                                                 <label for=""
                                                     class="clean peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Número</label>
@@ -402,8 +509,8 @@
                                             class="flex justify-items-center items-center justify-center md:gap-10 w-full border border-2 rounded-xl px-2 py-4">
                                             <div class="relative w-full">
                                                 {{-- <span class="text-center text-md md:text-[16px] text-gray-400 ">
-                                                    Status
-                                                </span> --}}
+                                                Status
+                                            </span> --}}
                                                 <div class="flex flex-row items-center justify-center gap-6">
                                                     <div>
                                                         <label
@@ -503,6 +610,7 @@
     var modalUpdate = document.getElementById("myModalUpdate");
     var btnUpdate = document.getElementById("myBtnUpdate");
     var atendente_modal = document.getElementById("add_atendente");
+    var webhook_modal = document.getElementById("add_webhook");
 
     window.onclick = function(event) {
         if (event.target == modalUpdate) {
@@ -510,6 +618,9 @@
         }
         if (event.target == atendente_modal) {
             atendente_modal.style.display = "none";
+        }
+        if (event.target == webhook_modal) {
+            webhook_modal.style.display = "none";
         }
     }
 
@@ -538,6 +649,14 @@
             atendente_modal.style.display = "none";
         } else {
             atendente_modal.style.display = "block";
+        }
+    }
+
+    function viewAddWebhook() {
+        if (webhook_modal.style.display == "block") {
+            webhook_modal.style.display = "none";
+        } else {
+            webhook_modal.style.display = "block";
         }
     }
 

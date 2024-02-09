@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('webhooks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('webhook')->nullable();
-            $table->string('type')->nullable();
+            $table->string('nome_transportadora');
+            $table->string('webhook');
         });
     }
 

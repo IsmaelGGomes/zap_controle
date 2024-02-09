@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,7 +22,12 @@ route::get('/dashboard/edit/{id}', [ContatoController::class, 'edit']);
 route::get('/form', [ContatoController::class, 'chamada']);
 
 Route::middleware('auth')->group(function () {
+    //atendente
     route::post('/atendente', [AtendenteController::class, 'store']);
+    route::delete('/atendente/{id}', [AtendenteController::class, 'destroy']);
+    //webhook
+    route::post('/webhook', [WebhookController::class, 'store']);
+    route::delete('/webhook/{id}', [WebhookController::class, 'destroy']);
 
     route::put('/dashboard/{id}', [ContatoController::class, 'update']);
     route::delete('/dashboard/{id}', [ContatoController::class, 'destroy']);
