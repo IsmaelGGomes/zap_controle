@@ -225,7 +225,7 @@
                             <div class="text-center">
                                 <h3 class="text-black mb-4 font-semibold">Formulário</h3>
                             </div>
-                            <form method="POST" action="{{ config('app.url') }}/webhook/">
+                            <form method="POST" action="{{ config('app.url') }}/webhook">
                                 @csrf
                                 <div class="relative z-0 w-full mb-6 group">
                                         <select class="w-full border border-1 rounded-xl mb-2 text-sm font-medium text-gray-900 " name="nome_transportadora" id="">
@@ -242,13 +242,22 @@
                                 </div>
 
                                 <div class="relative z-0 w-full mb-6 group">
-                                    <input id="webhook" type="text" name="webhook"
+                                    <input id="webhook_usuario" type="text" name="webhook_usuario"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
                             border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                         placeholder=" ">
                                     <label for=""
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                        Webhook</label>
+                                        Webhook Usuario</label>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                <input id="webhook_atendente" type="text" name="webhook_atendente"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                            border-gray-500 focus:border-blue-500 text-black focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" ">
+                                    <label for=""
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                                        Webhook Atendente</label>
                                 </div>
                                 <button class="rounded-xl py-2 px-4 bg-slate-600 text-white border-none">
                                     Salvar
@@ -266,9 +275,6 @@
                                             Nome</th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Número</th>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Ação</th>
                                     </tr>
                                 </thead>
@@ -276,7 +282,6 @@
                                     @foreach ($data_webhook as $items)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $items->nome_transportadora }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $items->webhook }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                             <form action="{{ config('app.url') }}/webhook/{{ $items->id }}" method="post">
                                                 @csrf
@@ -304,6 +309,7 @@
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm">
                                 <th class="py-3 px-6 text-left">ID</th>
                                 <th class="py-3 px-6 text-left whitespace-nowrap">Adicionar/Remover</th>
+                                <th class="py-3 px-6 text-center whitespace-nowrap">Data / Horário</th>
                                 <th class="py-3 px-6 text-center whitespace-nowrap">Transportadora</th>
                                 <th class="py-3 px-6 text-center">Filial</th>
                                 <th class="py-3 px-6 text-center">Email</th>
@@ -333,6 +339,11 @@
                                                     class="font-semibold text-green-600">{{ $items->add_remove }}</span>
                                             @endif
                                         </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <span class="flex items-center justify-center">
+                                            {{ date_format($items->created_at, '|d/m/Y | H:i') }}
+                                        </span>
                                     </td>
                                     <td class="py-3 px-6 text-center">
                                         <span class="flex items-center justify-center">
@@ -699,7 +710,6 @@
 
             switch (contato.status) {
                 case "Pendente":
-                    console.log("Pendente");
                     status_pendente.checked = true;
                     break;
                 case "Concluído":
@@ -772,8 +782,6 @@
         };
 
         const res = fetch(`{{ config('app.url') }}/dashboard/${id.value}`, options).then((response) => {
-            console.log(response.status);
-
             const statuss = response.status == '405' ? true : false;
 
             if (!statuss) {
@@ -810,9 +818,7 @@
             },
         };
         const res = fetch(`{{ config('app.url') }}/dashboard/${id}`, options).then((response) => {
-            console.log(response.status);
             window.location.reload()
-            console.log('sucess');
         }).catch((error) => {
             console.log(error);
         })

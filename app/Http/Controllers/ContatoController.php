@@ -72,16 +72,17 @@ class ContatoController extends Controller
 
         //criar um array para sortear o atendente
         $atendentes = Atendente::all()->pluck('numero_atendente')->first();
-        $webhook = Webhook::all()->pluck('nome_transportadora')->unique();
-        foreach ($webhook as $value) {
+        $webhook_atendente = Webhook::all()->pluck('nome_transportadora')->unique();
+        
+        foreach ($webhook_atendente as $value) {
             if ($data['transportadora'] == $value) {
-              $data_webhook = $value;
+                $filter = WebHook::where('nome_transportadora', $value)->first();
+                $result_atendente = $filter->webhook_atendente;
+                $result_usuario = $filter->webhook_usuario;
             }
         }
         
-        
-
-        $response = Http::post($data_webhook, [
+        $response_atendente = Http::post($result_atendente, [
             'cidade' => $data['cidade'],
             'add_remove' => $data['add_remove'],
             'transportadora' => $data['transportadora'],
@@ -91,6 +92,16 @@ class ContatoController extends Controller
             'email' => $data['email'],
             'atendente' => $atendentes
         ]);
+
+        if ($data['add_remove'] != 'Remover') {
+            $response_usuario = Http::post($result_usuario, [
+                'numero' => $data['numero'],
+                'nome' => $data['nome'],
+                'email' => $data['email'],
+                'status' => $data['status']
+            ]);
+        }
+        
         /* $response = $client->request('GET', 'viacep.com.br/ws/78635000/json/'); */
         Contato::create($data);
 
@@ -121,12 +132,25 @@ class ContatoController extends Controller
     public function update(Request $request, $id)
     {
         $contato = Contato::find($id);
+        $data = $request->all();
 
-        $validate = $request->all();
+        if ($data['transportadora'] == $contato->transportadora) {
+            $filter = WebHook::where('nome_transportadora', $contato->transportadora)->first();
+            $result_usuario = $filter->webhook_usuario;
+        }
+
+        if ($data['add_remove'] != 'Remover') {
+            $response_usuario = Http::post($result_usuario, [
+                'numero' => $data['numero'],
+                'nome' => $data['nome'],
+                'email' => $data['email'],
+                'status' => $data['status']
+            ]);
+        }
 
         session()->flash('Status', 'Status atualizado com sucesso !');
 
-        return $contato->update($validate);
+        return $contato->update($data);
     }
 
     /**
@@ -138,8 +162,6 @@ class ContatoController extends Controller
 
         session()->flash('Delete', 'Contato removido com sucesso !');
         return $data->delete();
-
-        // return redirect('/dashboard');
     }
 
     public function show_contato()

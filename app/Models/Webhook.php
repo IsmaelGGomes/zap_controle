@@ -11,7 +11,8 @@ class Webhook extends Model
 
     protected $fillable= [
         'nome_transportadora',
-        'webhook'
+        'webhook_atendente',
+        'webhook_usuario'
     ];
 
     protected $table = 'webhooks';
