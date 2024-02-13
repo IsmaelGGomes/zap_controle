@@ -119,7 +119,6 @@
 </nav>
 <script>
     function dropdown_login() {
-        console.log('ok')
         const item = document.querySelector('#dropdown_sair');
 
         if (item.classList.contains('hidden')){
